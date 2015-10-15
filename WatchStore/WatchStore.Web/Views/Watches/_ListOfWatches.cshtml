@@ -1,0 +1,15 @@
+﻿@model IEnumerable<WatchStore.Web.Models.WatchModel>
+
+
+@foreach (var item in Model) {
+    <div class="well">
+        <h4>
+            <strong>Name : @item.Name</strong>
+            <span class="pull-right label label-primary">Гарантия @item.Warranty.ToString("D") года</span>
+        </h4>
+        <h5>Brand : @item.Brand</h5>
+        <h5>Colour : @item.Colour</h5>
+        <h5>Water Resistance : @item.WaterResistance</h5>
+    </div>
+}
+
