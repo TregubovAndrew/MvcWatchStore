@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Watch Store Online</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse">
+        <a class="navbar-brand" href="#">Watch Store Online</a>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav ">
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="navbar-brand">Ваш логин: @User.Identity.Name</li>
+                    <li> @Html.ActionLink("Sign out", "Logoff", "Account")</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Sign in", "Login", "Account")</li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="row panel ">
+        <div id="categories" class="col-lg-3">
+            @Html.Action("Menu", "Nav");
+            @*@Html.ActionLink("Men", "Index", "Watch",null, new { category = "Men" })
+            @Html.ActionLink("Women", "Index", "Watch",null, new { category = "Women" })*@
+
+        </div>
+        <div class="col-lg-7">
+            @RenderBody()
+        </div>
+    </div>
+
+</body>
+</html>

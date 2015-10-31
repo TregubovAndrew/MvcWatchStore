@@ -11,15 +11,13 @@ namespace WatchStore.DataAccess.Repositories
     public class WatchStoreDataContext : DbContext
     {
         public DbSet<Watch> Watches { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
         public WatchStoreDataContext()
         {
-
+            Database.SetInitializer(new WatchStoreDataContextInitializer());
         }
 
 
-       
-
-       
     }
 }

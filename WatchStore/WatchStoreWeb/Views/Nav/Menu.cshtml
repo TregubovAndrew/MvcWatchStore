@@ -1,0 +1,22 @@
+﻿@model IEnumerable<string>
+           
+@*@Html.ActionLink("Home","Index","Watch",null,
+new {@class = "btn btn-block btn-default btn-lg"})*@
+<form method="GET" action="@Url.Action("Index","Watch")">
+    <input type="submit" class="btn btn-block btn-default btn-lg" value="All" />
+    @foreach (var item in Model)
+    {
+        if (@ViewBag.SelectedCategory == item)
+        {
+            <input type="submit" class="btn btn-block btn-default btn-lg btn-primary" name="category" value="@item" />
+        }
+        else
+        {
+            <input type="submit" class="btn btn-block btn-default btn-lg" name="category" value="@item" />
+        }
+
+    }
+
+
+</form>
+

@@ -14,5 +14,6 @@ namespace WatchStore.DataAccess.Entities
         public string Colour { get; set; }
         public string WaterResistance { get; set; }
         public int Warranty { get; set; }
+        public string Category { get; set; }
     }
 }

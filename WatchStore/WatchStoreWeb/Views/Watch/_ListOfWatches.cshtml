@@ -1,0 +1,29 @@
+﻿@model IEnumerable<WatchStoreWeb.Models.WatchModel>
+
+@foreach (var item in Model)
+{
+    <div class="well">
+        @{
+    var path = @item.Name + " – " + @item.Colour + ".jpg";
+        }
+        <img src="~/Content/images/@path" width="200" height="200" />
+        <div>
+            <h4>
+                <strong>Name : @item.Name</strong>
+            </h4>
+            <h5>Brand : @item.Brand</h5>
+            <h5>Colour : @item.Colour</h5>
+            <h5>Water Resistance : @item.WaterResistance</h5>
+            <h5>Warranty : @item.Warranty.ToString("D")</h5>
+            <h5>Category : @item.CurrentCategory</h5>
+            @if (Request.IsAuthenticated)
+            {
+                <div>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </div>
+            }
+        </div>
+    </div>
+}
