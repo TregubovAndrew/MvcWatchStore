@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -15,18 +16,19 @@ namespace WatchStoreWeb.Controllers
     public class WatchController : Controller
     {
         // GET: Watch
-        private readonly IWatchService _repository;
-        public WatchController(IWatchService repository)
+        private readonly IWatchService _watchService;
+        private readonly IImageService _imageService;
+        public WatchController(IWatchService watchService, IImageService imageService)
         {
-            _repository = repository;
+            _watchService = watchService;
+            _imageService = imageService;
         }
 
         // GET: Watches
-        public ActionResult Index(string searchTerm = null,string category = null)
+        public ActionResult Index(string searchTerm = null, string category = null)
         {
-            //var models = repository.Watches
-
-            var watches = _repository.SearchByName(searchTerm).Select(WatchModel.ConvertToWatchModel).Where(c => category==null || c.CurrentCategory==category);
+            var watches = _watchService.SearchByName(searchTerm).Select(WatchModel.ConvertToWatchModel).Where(c => category == null || c.CurrentCategory == category);
+            //var watches = _watchService.GetAllWatches(w =>w.)
 
             //var model = watches.Where(w => searchTerm==null || w.Name.StartsWith(searchTerm)).Select(WatchModel.ConvertToWatchModel);
             return View(watches);
@@ -38,7 +40,7 @@ namespace WatchStoreWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Watch watch = _repository.GetById(id);
+            Watch watch = _watchService.GetById(id);
             if (watch == null)
             {
                 return HttpNotFound();
@@ -57,14 +59,15 @@ namespace WatchStoreWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Brand,Colour,WaterResistance,Warranty")] WatchModel watchModel)
+        public ActionResult Create([Bind(Include = "Id,Name,Brand,Colour,WaterResistance,Warranty,CurrentCategory")] WatchModel watchModel, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
-                using (var db = new WatchRepository())
-                {
-                    db.CreateWatch(WatchModel.ConvertToWatch(watchModel));
-                }
+                Watch watch;
+                _watchService.CreateWatch(WatchModel.ConvertToWatch(watchModel));
+                watch = _watchService.GetAllWatches().LastOrDefault();
+                var image = _imageService.ConvertFileToImageDataAndBind(file, watch);
+                _imageService.AddImage(image);
                 return RedirectToAction("Index");
             }
 
@@ -78,7 +81,7 @@ namespace WatchStoreWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Watch watch = _repository.GetById(id);
+            Watch watch = _watchService.GetById(id);
             if (watch == null)
             {
                 return HttpNotFound();
@@ -91,16 +94,20 @@ namespace WatchStoreWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Brand,Colour,WaterResistance,Warranty")] WatchModel watchModel)
+        public ActionResult Edit(WatchModel watchModel, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
-            {
-                using (var db = new WatchRepository())
-                {
-                    db.EditWatch(WatchModel.ConvertToWatch(watchModel));
-                }
+            if (ModelState.IsValid && file!=null)
+            { 
+                Watch watch = WatchModel.ConvertToWatch(watchModel);
+
+                _watchService.EditWatch(watch);
+                _imageService.AddImage(_imageService.ConvertFileToImageDataAndBind(file, watch));
+                //var image = _imageService.ConvertFileToImageDataAndBind(file, watch);
+
                 return RedirectToAction("Index");
             }
+            if (file == null)
+                return RedirectToAction("Edit", "Watch", new { id = watchModel.Id });
             return View(watchModel);
         }
 
@@ -111,7 +118,7 @@ namespace WatchStoreWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Watch watch = _repository.GetById(id);
+            Watch watch = _watchService.GetById(id);
             if (watch == null)
             {
                 return HttpNotFound();
@@ -135,7 +142,7 @@ namespace WatchStoreWeb.Controllers
         {
             if (disposing)
             {
-                
+
             }
             base.Dispose(disposing);
         }

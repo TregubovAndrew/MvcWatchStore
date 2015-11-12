@@ -1,0 +1,15 @@
+﻿@model WatchStore.DataAccess.Entities.Image
+
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h2>Upload</h2>
+@using (Html.BeginForm("Upload", "Image", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    @Html.ValidationSummary(true)
+    @Html.TextBoxFor(model => model.File,new {type = "file"})
+    <input type="submit" value="Upload"/>
+}
+
+

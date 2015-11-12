@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using WatchStore.BusinessLogic.Interfaces;
 using WatchStore.BusinessLogic.Services;
+using WatchStore.DataAccess;
 using WatchStore.DataAccess.Entities;
 using WatchStore.DataAccess.Interfaces;
 using WatchStore.DataAccess.Repositories;

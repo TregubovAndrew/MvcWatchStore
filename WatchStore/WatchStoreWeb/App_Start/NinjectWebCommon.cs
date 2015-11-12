@@ -70,6 +70,8 @@ namespace WatchStoreWeb.App_Start
             kernel.Bind<IAccountRepository>().To<AccountRepository>();
             kernel.Bind<IAccountService>().To<AccountService>();
             kernel.Bind<IWatchService>().To<WatchService>();
+            kernel.Bind<IImageService>().To<ImageService>();
+            kernel.Bind<IImageRepository>().To<ImageRepository>();
         }        
     }
 }

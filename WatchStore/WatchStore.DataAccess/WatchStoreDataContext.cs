@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using WatchStore.DataAccess.Entities;
 
-namespace WatchStore.DataAccess.Repositories
+namespace WatchStore.DataAccess
 {
     public class WatchStoreDataContext : DbContext
     {
         public DbSet<Watch> Watches { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Image> Images { get; set; } 
 
         public WatchStoreDataContext()
         {
-            Database.SetInitializer(new WatchStoreDataContextInitializer());
+            //Database.SetInitializer(new WatchStoreDataContextInitializer());
         }
 
-
+        
     }
 }

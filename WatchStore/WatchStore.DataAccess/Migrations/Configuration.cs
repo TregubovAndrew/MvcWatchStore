@@ -1,35 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WatchStore.DataAccess.Entities;
-using WatchStore.DataAccess.Repositories;
 
-namespace WatchStore.DataAccess
+namespace WatchStore.DataAccess.Migrations
 {
-    public class WatchStoreDataContextInitializer :  CreateDatabaseIfNotExists<WatchStoreDataContext>
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<WatchStoreDataContext>
     {
+        //private readonly bool _pendingMigrations;
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = false;
+            //var migrator = new DbMigrator(this);
+            //_pendingMigrations = migrator.GetPendingMigrations().Any();
+        }
+
         protected override void Seed(WatchStoreDataContext context)
         {
+            //  This method will be called after migrating to the latest version.
 
-            context.Accounts.Add(
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
+            //if (!_pendingMigrations) return;
+
+            context.Accounts.AddOrUpdate(a => a.Login,
                 new Account()
                 {
                     Login = "admin",
                     Password = "admin"
                 }
                 );
-            context.Accounts.Add(
+             context.Accounts.AddOrUpdate(a =>a.Login,
                 new Account()
                 {
                     Login = "manager",
                     Password = "manager"
                 }
                 );
-            context.Watches.AddOrUpdate(
+            context.Watches.AddOrUpdate(w =>w.Name,
                 new Watch()
                 {
                     Name = "BUCHANAN CHRONOGRAPH LEATHER WATCH",
@@ -41,7 +59,7 @@ namespace WatchStore.DataAccess
                 },
                  new Watch()
                  {
-                     Name = "BUCHANAN CHRONOGRAPH LEATHER WATCH",
+                     Name = "BUCHANAN LEATHER WATCH",
                      Brand = "Buchanan",
                      Colour = "Dark brown",
                      WaterResistance = "5 ATM",
@@ -97,7 +115,9 @@ namespace WatchStore.DataAccess
                      Warranty = 11,
                      Category = "Women"
                  });
-            base.Seed(context);
+            context.SaveChanges();
+
+
         }
     }
 }

@@ -32,9 +32,24 @@ namespace WatchStore.BusinessLogic.Services
             return _repository.GetByName(name);
         }
 
+        public void CreateWatch(Watch watch)
+        {
+            _repository.CreateWatch(watch);
+        }
+
+        public void EditWatch(Watch watch)
+        {
+           _repository.EditWatch(watch);
+        }
+
+        public void DeleteWatch(int? id)
+        {
+           _repository.DeleteWatch(id);
+        }
+
         public IEnumerable<Watch> GetWatchesByCategory(string category)
         {
-            throw new NotImplementedException();
+            return _repository.GetAllWatches().Where(c => category == null || c.Category == category);
         }
         public IEnumerable<Watch> SearchByName(string name)
         {

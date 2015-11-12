@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 using WatchStore.DataAccess.Entities;
+using Image = WatchStore.DataAccess.Entities.Image;
 
 namespace WatchStoreWeb.Models
 {
@@ -16,11 +17,12 @@ namespace WatchStoreWeb.Models
         public string Colour { get; set; }
         public string WaterResistance { get; set; }
         [Required]
-        [Range(1, 10)]
         [Display(Name = "Гарантия")]
         public int Warranty { get; set; }
 
         public string CurrentCategory { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
+
 
         public static WatchModel ConvertToWatchModel(Watch watch)
         {
@@ -35,7 +37,9 @@ namespace WatchStoreWeb.Models
                 Colour = watch.Colour,
                 WaterResistance = watch.WaterResistance,
                 Warranty = watch.Warranty,
-                CurrentCategory = watch.Category
+                CurrentCategory = watch.Category,
+                Images = watch.Images
+                
             };
         }
 
@@ -52,7 +56,8 @@ namespace WatchStoreWeb.Models
                 Colour = watch.Colour,
                 WaterResistance = watch.WaterResistance,
                 Warranty = watch.Warranty,
-                Category = watch.CurrentCategory
+                Category = watch.CurrentCategory,
+                Images = watch.Images
             };
         }
         

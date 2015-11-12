@@ -37,12 +37,21 @@ namespace WatchStore.DataAccess.Repositories
         public void EditWatch(Watch watch)
         {
             _db.Entry(watch).State = EntityState.Modified;
+            //foreach (var image in watch.Images)
+            //{
+            //    _db.Entry(image).State = EntityState.Modified;
+            //}
             _db.SaveChanges();
         }
 
         public void DeleteWatch(int? id)
         {
             Watch watch = _db.Watches.Find(id);
+            foreach (var image in watch.Images.ToList())
+            {
+                _db.Images.Remove(image);
+                _db.SaveChanges();
+            }
             _db.Watches.Remove(watch);
             _db.SaveChanges();
         }

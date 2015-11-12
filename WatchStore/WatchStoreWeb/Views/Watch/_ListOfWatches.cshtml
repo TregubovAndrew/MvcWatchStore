@@ -6,7 +6,12 @@
         @{
     var path = @item.Name + " – " + @item.Colour + ".jpg";
         }
-        <img src="~/Content/images/@path" width="200" height="200" />
+        @*<img src="~/Content/images/@path" width="200" height="200" />*@
+        @foreach (var img in item.Images)
+        {
+            <img src="data:image/png;base64,@Convert.ToBase64String(img.ImageData)" width="200" height="200" />
+        }
+        
         <div>
             <h4>
                 <strong>Name : @item.Name</strong>
