@@ -12,46 +12,46 @@ namespace WatchStore.BusinessLogic.Services
 {
     public class ImageService : IImageService
     {
-        private readonly IImageRepository _repository;
+        private readonly IImageRepository _imageRepository;
 
-        public ImageService(IImageRepository repository)
+        public ImageService(IImageRepository imageRepository)
         {
-            _repository = repository;
+            _imageRepository = imageRepository;
         }
 
         public Image GetById(int? id)
         {
-            return _repository.GetById(id);
+            return _imageRepository.GetById(id);
         }
 
         public IEnumerable<Image> GetAllImages()
         {
-            return _repository.GetAllImages();
+            return _imageRepository.GetAllImages();
         }
 
         public IEnumerable<Image> GetImagesByWatchId(int watchId)
         {
-            return _repository.GetImagesByWatchId(watchId);
+            return _imageRepository.GetImagesByWatchId(watchId);
         }
 
         public int AmountOfImages(int watchId)
         {
-            return _repository.AmountOfImages(watchId);
+            return _imageRepository.AmountOfImages(watchId);
         }
 
         public void AddImage(Image image)
         {
-            _repository.AddImage(image);
+            _imageRepository.AddImage(image);
         }
 
         public void EditImage(Image image)
         {
-            _repository.EditImage(image);
+            _imageRepository.EditImage(image);
         }
 
         public void DeleteImage(int? id)
         {
-            _repository.DeleteImage(id);
+            _imageRepository.DeleteImage(id);
         }
 
         public Image ConvertFileToImageDataAndBind(HttpPostedFileBase file,Watch watch)

@@ -17,7 +17,6 @@ namespace WatchStore.BusinessLogic.Interfaces
         void AddImage(Image image);
         void EditImage(Image image);
         void DeleteImage(int? id);
-
         Image ConvertFileToImageDataAndBind(HttpPostedFileBase file,Watch watch);
     }
 }

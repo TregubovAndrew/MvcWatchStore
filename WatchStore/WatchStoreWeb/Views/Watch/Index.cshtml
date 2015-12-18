@@ -14,8 +14,9 @@
     {
         @Html.ActionLink("Create New", "Create")
     }
-        
+
 </p>
+
 @*<table class="table">
         <tr>
             <th>
@@ -63,4 +64,8 @@
         }
 
     </table>*@
-@Html.Partial("_ListOfWatches", Model)
+@foreach (var item in Model)
+{
+    @Html.Partial("_ListOfWatches", item)       
+}
+

@@ -17,5 +17,6 @@ namespace WatchStore.BusinessLogic.Interfaces
         void DeleteWatch(int? id);
         IEnumerable<Watch> GetWatchesByCategory(string category);
         IEnumerable<Watch> SearchByName(string name);
+        IEnumerable<Watch> GetAllWatchesInOrder(int orderId);
     }
 }

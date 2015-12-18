@@ -1,0 +1,38 @@
+﻿@model WatchStoreWeb.Models.WatchModel
+
+@{
+    ViewBag.Title = "WatchDetails";
+}
+
+<h2>WatchDetails</h2>
+
+<div class="col-md-8 clearfix">
+    @foreach (var img in Model.Images)
+    {
+        <img src="data:image/png;base64,@Convert.ToBase64String(img.ImageData)" width="200" height="200"/>
+    }
+    <h4>Description</h4>
+    @Model.Description
+    <a class="btn" href="@ViewBag.ReturnUrl">Back</a>
+</div>
+<div class="col-md-4" >
+    <div class="row">
+        <h4>
+            <strong>Name : @Model.Name</strong>
+        </h4>
+        <h4>@Model.Brand</h4>
+        <h4>@Model.Price.ToString("C")</h4>
+        <h4>Colour : @Model.Colour</h4>
+        
+        <h5>CaseMaterial: @Model.CaseMaterial</h5>
+        <h5>CaseDiameter: @Model.CaseDiameter</h5>
+        <h5>Lens: @Model.Lens</h5>
+        <h5>Strap: @Model.Strap</h5>
+        <h5>Mechanism: @Model.Mechanism</h5>
+        <h5>WaterResistance: @Model.WaterResistance</h5>
+        <h5>Warranty: @Model.Warranty</h5>
+        <h5>Colour: @Model.Colour</h5>
+        <h5>Category: @Model.Category</h5>
+    </div>
+</div>
+

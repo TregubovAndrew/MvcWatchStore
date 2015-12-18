@@ -1,0 +1,10 @@
+﻿@model WatchStore.DataAccess.Session.Cart
+
+<div class="navbar-text navbar-right">
+    <b>@Html.ActionLink("Your Cart: ", "Index", new {ReturnUrl = Request.Url.PathAndQuery})</b>
+    @*@Model.Count() item(s),
+    @Model.Sum(w =>w.Warranty)*@
+    @Model.CartLines().Sum(x => x.Quantity) item(s),
+    @Model.ComputeTotalPrice().ToString("C")
+</div>
+

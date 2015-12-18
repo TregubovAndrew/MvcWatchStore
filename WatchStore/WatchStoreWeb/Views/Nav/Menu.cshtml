@@ -1,8 +1,24 @@
 ﻿@model IEnumerable<string>
            
-@*@Html.ActionLink("Home","Index","Watch",null,
-new {@class = "btn btn-block btn-default btn-lg"})*@
-<form method="GET" action="@Url.Action("Index","Watch")">
+@Html.ActionLink("Home","Index","Watch",null,
+new {@class = "btn btn-block btn-default btn-lg"})
+
+@foreach (var link in Model)
+{
+    @Html.RouteLink(link,new
+    {
+        controller = "Watch",
+        action = "Index",
+        category = link,
+        
+    },
+        new
+        {
+            @class = "btn btn-block btn-default btn-lg "
+            + (link==ViewBag.SelectedCategory ? "btn-primary" : "")        
+        })
+}
+@*<form method="GET" action="@Url.Action("Index","Watch")">
     <input type="submit" class="btn btn-block btn-default btn-lg" value="All" />
     @foreach (var item in Model)
     {
@@ -18,5 +34,5 @@ new {@class = "btn btn-block btn-default btn-lg"})*@
     }
 
 
-</form>
+</form>*@
 

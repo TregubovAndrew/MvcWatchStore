@@ -69,25 +69,33 @@ namespace WatchStoreWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_accountService.IsUniqueLogin(model.Name))
+                if (_accountService.IsUniqueLogin(model.Login))
                 {
-                    Account account = new Account()
-                    {
-                        Login = model.Name,
-                        Password = model.Password
-                    };
-                    using (var db = new WatchStoreDataContext())
-                    {
-                        db.Accounts.Add(account);
-                        db.SaveChanges();
-                        return RedirectToAction("Index", "Watch");
-                    }
+                   _accountService.CreateAccount(
+                       new Account()
+                       {
+                           Login = model.Login,
+                           Password = model.Password,
+                           Email = model.Email,
+                           FirstName = model.FirstName,
+                           LastName = model.LastName,
+                           PostalCode = model.PostalCode,
+                           Country = model.Country,
+                           City = model.City,
+                           Address = model.Address,
+                           Phone = model.Phone
+                       });
+                    return RedirectToAction("Login", "Account");
                 }
                 else
                     ModelState.AddModelError("", "Пользователя с таким логином уже существует");
             }
-            return View();
+            return View(model);
         }
+
+       
+      
+        
     }
 }
 

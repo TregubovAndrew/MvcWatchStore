@@ -34,6 +34,21 @@ namespace WatchStore.BusinessLogic.Services
             return _accountRepository.GetByLogin(login);
         }
 
+        public void CreateAccount(Account account)
+        {
+            _accountRepository.CreateAccount(account);
+        }
+
+        public void UpdateAccount(Account account)
+        {
+            _accountRepository.UpdateAccount(account);
+        }
+
+        public void DeleteAccount(int? id)
+        {
+            _accountRepository.DeleteAccount(id);
+        }
+
         public bool IsUniqueLogin(string login)
         {
             var user = GetByLogin(login);

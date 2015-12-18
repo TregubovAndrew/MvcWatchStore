@@ -18,20 +18,30 @@ namespace WatchStoreWeb.Controllers
         // GET: Watch
         private readonly IWatchService _watchService;
         private readonly IImageService _imageService;
-        public WatchController(IWatchService watchService, IImageService imageService)
+        private readonly IOrderService _orderService;
+        public WatchController(IWatchService watchService, IImageService imageService, IOrderService orderService)
         {
             _watchService = watchService;
             _imageService = imageService;
+            _orderService = orderService;
         }
 
         // GET: Watches
-        public ActionResult Index(string searchTerm = null, string category = null)
+        public ActionResult Index(string category,string searchTerm = null)
         {
-            var watches = _watchService.SearchByName(searchTerm).Select(WatchModel.ConvertToWatchModel).Where(c => category == null || c.CurrentCategory == category);
+            var watches = _watchService.SearchByName(searchTerm).Select(WatchModel.ConvertToWatchModel).Where(c => category == null || c.Category == category);
             //var watches = _watchService.GetAllWatches(w =>w.)
 
             //var model = watches.Where(w => searchTerm==null || w.Name.StartsWith(searchTerm)).Select(WatchModel.ConvertToWatchModel);
             return View(watches);
+        }
+        
+        public ActionResult WatchDetails(int id,string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            var watch = _watchService.GetById(id);
+            WatchModel model = WatchModel.ConvertToWatchModel(watch);
+            return View(model);
         }
         // GET: Watches/Details/5
         public ActionResult Details(int? id)
@@ -59,13 +69,12 @@ namespace WatchStoreWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Brand,Colour,WaterResistance,Warranty,CurrentCategory")] WatchModel watchModel, HttpPostedFileBase file)
+        public ActionResult Create(WatchModel watchModel, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
-                Watch watch;
-                _watchService.CreateWatch(WatchModel.ConvertToWatch(watchModel));
-                watch = _watchService.GetAllWatches().LastOrDefault();
+                Watch watch = WatchModel.ConvertToWatch(watchModel);
+                _watchService.CreateWatch(watch);
                 var image = _imageService.ConvertFileToImageDataAndBind(file, watch);
                 _imageService.AddImage(image);
                 return RedirectToAction("Index");
@@ -131,10 +140,7 @@ namespace WatchStoreWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            using (var db = new WatchRepository())
-            {
-                db.DeleteWatch(id);
-            }
+           _watchService.DeleteWatch(id);
             return RedirectToAction("Index");
         }
 
@@ -146,5 +152,8 @@ namespace WatchStoreWeb.Controllers
             }
             base.Dispose(disposing);
         }
+
+     
+       
     }
 }

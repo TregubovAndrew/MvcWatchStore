@@ -1,34 +1,53 @@
-﻿@model IEnumerable<WatchStoreWeb.Models.WatchModel>
+﻿@model WatchStoreWeb.Models.WatchModel
 
-@foreach (var item in Model)
-{
-    <div class="well">
-        @{
-    var path = @item.Name + " – " + @item.Colour + ".jpg";
-        }
-        @*<img src="~/Content/images/@path" width="200" height="200" />*@
-        @foreach (var img in item.Images)
-        {
+
+
+<div class=" col-sm-4">
+    @{
+        var path = @Model.Name + " – " + @Model.Colour + ".jpg";
+    }
+    @*<img src="~/Content/images/@path" width="200" height="200" />*@
+    @foreach (var img in Model.Images)
+    {
+        <a href="@Url.Action("WatchDetails","Watch", new
+                 {
+                     id = Model.Id,
+                     returnUrl = Request.Url.PathAndQuery
+                 })">
             <img src="data:image/png;base64,@Convert.ToBase64String(img.ImageData)" width="200" height="200" />
-        }
-        
-        <div>
-            <h4>
-                <strong>Name : @item.Name</strong>
-            </h4>
-            <h5>Brand : @item.Brand</h5>
-            <h5>Colour : @item.Colour</h5>
-            <h5>Water Resistance : @item.WaterResistance</h5>
-            <h5>Warranty : @item.Warranty.ToString("D")</h5>
-            <h5>Category : @item.CurrentCategory</h5>
-            @if (Request.IsAuthenticated)
+        </a>
+    }
+
+    <div>
+        <h4>
+            <strong>Name : @Model.Name</strong>
+        </h4>
+        <h5>Brand : @Model.Brand</h5>
+        <h5>Colour : @Model.Colour</h5>
+        @*@Html.ActionLink("Watch Details", "WatchDetails", new
             {
-                <div>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </div>
-            }
-        </div>
+                id = Model.Id,
+                returnUrl = Request.Url.PathAndQuery
+
+            })*@
+        @if (Request.IsAuthenticated)
+        {
+            <div>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = Model.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+            </div>
+        }
+        @using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            <div>
+                @Html.HiddenFor(x => x.Id)
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success" value="Add to cart" />
+            </div>
+        }
+        <br />
+        @*@Html.ActionLink("AddToOrder","Order",null,@item);*@
     </div>
-}
+</div>
+

@@ -11,7 +11,12 @@ namespace WatchStore.DataAccess.Repositories
 {
     public class ImageRepository : IImageRepository, IDisposable
     {
-        private readonly WatchStoreDataContext _db = new WatchStoreDataContext();
+        private readonly WatchStoreDataContext _db;
+        public ImageRepository(WatchStoreDataContext db)
+        {
+            _db = db;
+        }
+
         public Image GetById(int? id)
         {
             return _db.Images.Find(id);

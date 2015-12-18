@@ -11,7 +11,13 @@ namespace WatchStore.DataAccess.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly WatchStoreDataContext _db = new WatchStoreDataContext();
+        //private readonly WatchStoreDataContext _db = new WatchStoreDataContext();
+        private readonly WatchStoreDataContext _db;
+        public AccountRepository(WatchStoreDataContext db)
+        {
+            _db = db;
+        }
+
         public Account GetById(int? id)
         {
             return _db.Accounts.Find(id);

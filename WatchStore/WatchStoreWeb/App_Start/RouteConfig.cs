@@ -18,6 +18,26 @@ namespace WatchStoreWeb
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Watch", action = "Index", id = UrlParameter.Optional }
             );
+
+          //  routes.MapRoute(null,"",
+          //     new { controller = "Watch", action = "Index", category = (string)null, id = UrlParameter.Optional }
+          // );
+
+          //  routes.MapRoute(null, "",
+          //    new { controller = "Nav", action = "Menu"}
+          //);
+
+            //routes.MapRoute(null,
+            //    "{category}",
+            //    new { controller = "Watch", action = "Index"}
+            //);
+
+            //routes.MapRoute(
+            //    name: "Cart",
+            //    url: "{controller}/{action}/{returnUrl}",
+            //    defaults: new { controller = "Cart", action = "Index", returnUrl = UrlParameter.Optional}
+            //);
+
         }
     }
 }

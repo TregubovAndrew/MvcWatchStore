@@ -12,7 +12,13 @@ namespace WatchStore.DataAccess.Repositories
 {
     public class WatchRepository : IWatchRepository, IDisposable
     {
-        private readonly WatchStoreDataContext _db = new WatchStoreDataContext();
+        private readonly WatchStoreDataContext _db;
+
+        public WatchRepository(WatchStoreDataContext db)
+        {
+            _db = db;
+        }
+
         public Watch GetById(int? id)
         {
             return _db.Watches.Find(id);

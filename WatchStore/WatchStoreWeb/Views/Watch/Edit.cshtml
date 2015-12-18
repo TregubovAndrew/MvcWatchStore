@@ -10,7 +10,7 @@
 @using (Html.BeginForm("Edit", "Watch", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Watch</h4>
         <hr />
@@ -50,32 +50,35 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Warranty, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.Warranty, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Warranty, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Warranty, "", new {@class = "text-danger"})
+                @Html.EditorFor(model => model.Warranty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Warranty, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.CurrentCategory, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CurrentCategory, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.CurrentCategory, "", new {@class = "text-danger"})
+                @Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
             </div>
         </div>
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Images, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Images.FirstOrDefault(i => i.WatchId==model.Id).File, new { type = "file" })
-                @Html.ValidationMessageFor(model => model.Images, "", new {@class = "text-danger"})
+                @{
+                    @Html.TextBoxFor(model => model.File, "", new { type = "file" })
+                    @Html.ValidationMessageFor(model => model.Images, "", new { @class = "text-danger" })
+                }
             </div>
         </div>
 
         @foreach (var img in Model.Images)
         {
             <img src="data:image/png;base64,@Convert.ToBase64String(img.ImageData)" width="200" height="200" />
+           
         }
 
         <div class="form-group">

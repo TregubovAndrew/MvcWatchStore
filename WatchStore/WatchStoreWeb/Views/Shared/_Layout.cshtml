@@ -11,7 +11,7 @@
 <body>
     <div class="navbar navbar-inverse">
         <a class="navbar-brand" href="#">Watch Store Online</a>
-
+        @Html.Action("Summary","Cart")
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav ">
                 @if (Request.IsAuthenticated)

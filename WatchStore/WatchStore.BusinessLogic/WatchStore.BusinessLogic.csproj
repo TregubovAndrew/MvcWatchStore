@@ -42,11 +42,14 @@
   <ItemGroup>
     <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\IImageService.cs" />
+    <Compile Include="Interfaces\IOrderService.cs" />
     <Compile Include="Interfaces\IWatchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\ImageService.cs" />
+    <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\WatchService.cs" />
+    <Compile Include="Session\AnotherCart.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WatchStore.DataAccess\WatchStore.DataAccess.csproj">

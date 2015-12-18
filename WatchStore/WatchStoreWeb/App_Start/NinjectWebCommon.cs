@@ -1,5 +1,6 @@
 using WatchStore.BusinessLogic.Interfaces;
 using WatchStore.BusinessLogic.Services;
+using WatchStore.DataAccess;
 using WatchStore.DataAccess.Interfaces;
 using WatchStore.DataAccess.Repositories;
 
@@ -72,6 +73,11 @@ namespace WatchStoreWeb.App_Start
             kernel.Bind<IWatchService>().To<WatchService>();
             kernel.Bind<IImageService>().To<ImageService>();
             kernel.Bind<IImageRepository>().To<ImageRepository>();
+            kernel.Bind<WatchStoreDataContext>().ToSelf().InRequestScope();
+            kernel.Bind<IOrderWatchRepository>().To<OrderWatchRepository>();
+            kernel.Bind<IOrderRepository>().To<OrderRepository>();
+            kernel.Bind<IOrderService>().To<OrderService>();
+
         }        
     }
 }

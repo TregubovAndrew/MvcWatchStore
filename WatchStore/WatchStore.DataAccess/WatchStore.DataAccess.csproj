@@ -70,20 +70,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Account.cs" />
+    <Compile Include="Migrations\201512011621394_Initial.cs" />
+    <Compile Include="Migrations\201512011621394_Initial.Designer.cs">
+      <DependentUpon>201512011621394_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512101607117_First.cs" />
+    <Compile Include="Migrations\201512101607117_First.Designer.cs">
+      <DependentUpon>201512101607117_First.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Session\Cart.cs" />
+    <Compile Include="Session\CartLine.cs" />
     <Compile Include="Entities\Image.cs" />
+    <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\OrderWatch.cs" />
     <Compile Include="Entities\Watch.cs" />
     <Compile Include="Interfaces\IAccountRepository.cs" />
     <Compile Include="Interfaces\IImageRepository.cs" />
+    <Compile Include="Interfaces\IOrderRepository.cs" />
+    <Compile Include="Interfaces\IOrderWatchRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Migrations\201511111846377_Initial.cs" />
-    <Compile Include="Migrations\201511111846377_Initial.Designer.cs">
-      <DependentUpon>201511111846377_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IWatchRepository.cs" />
     <Compile Include="Repositories\AccountRepository.cs" />
     <Compile Include="Repositories\ImageRepository.cs" />
+    <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Repositories\OrderWatchRepository.cs" />
     <Compile Include="Repositories\WatchRepository.cs" />
     <Compile Include="WatchStoreDataContext.cs" />
     <Compile Include="WatchStoreDataContextInitializer.cs" />
@@ -93,8 +105,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511111846377_Initial.resx">
-      <DependentUpon>201511111846377_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512011621394_Initial.resx">
+      <DependentUpon>201512011621394_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512101607117_First.resx">
+      <DependentUpon>201512101607117_First.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

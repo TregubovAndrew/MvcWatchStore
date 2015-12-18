@@ -12,6 +12,9 @@ namespace WatchStore.BusinessLogic.Interfaces
         Account GetById(int? id);
         IEnumerable<Account> GetAllAccount();
         Account GetByLogin(string login);
+        void CreateAccount(Account account);
+        void UpdateAccount(Account account);
+        void DeleteAccount(int? id);
         bool IsUniqueLogin(string login);
         bool IsExistAccount(string login, string password);
 
