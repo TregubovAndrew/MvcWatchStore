@@ -3,69 +3,54 @@
     ViewBag.Title = "Index";
 }
 
-
-<form class="navbar-search" method="GET" action="@Url.Action("Index")">
-    <input placeholder="Search" type="text" name="searchTerm" />
-    <input type="submit" value="Search By Name" />
-</form>
-<br />
-<p>
-    @if (Request.IsAuthenticated)
-    {
-        @Html.ActionLink("Create New", "Create")
-    }
-
-</p>
-
-@*<table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Colour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WaterResistance)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Warranty)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Brand)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Colour)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WaterResistance)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Warranty)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-                    @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-                    @Html.ActionLink("Delete", "Delete", new {id = item.Id})
-                </td>
-            </tr>
-        }
-
-    </table>*@
-@foreach (var item in Model)
+@foreach (var watch in Model)
 {
-    @Html.Partial("_ListOfWatches", item)       
+    <div class=" col-sm-4 js-action-hover">
+
+
+            <a href="@Url.Action("WatchDetails", "Watch", new
+                 {
+                     id = watch.Id
+                 })" style="display: block; position: relative;">
+                <img src="data:image/png;base64,@Convert.ToBase64String(watch.Images.First().ImageData)" style="width: 100%; height: 100%;" />
+                <div class="overlay" >
+                    <div class="overlayWatchInfo">
+                        <h4>
+                            <strong>@watch.Name</strong>
+                        </h4>
+                        <h5>@watch.Brand.Name</h5>
+                        <h5>@watch.Price.ToString("c")</h5>
+                    </div>
+                </div>
+                <div class="message" style="display: none;">
+                    <h4>
+                        <strong>Name : @watch.Name</strong>
+                    </h4>
+                    <h5>Brand : @watch.Brand.Name</h5>
+                    <h5>Colour : @watch.Colour</h5>
+                </div>
+            </a>
+
+        @*@Html.ActionLink("Watch Details", "WatchDetails", new
+            {
+                id = watch.Id,
+                returnUrl = Request.Url
+
+            })*@
+    </div>
+
 }
+@*<script type="text/javascript">
+    $('.js-action-hover').hover(function () {
+        console.log("in");
+        var $temp = $(this).find($('.overlay'));
+        $temp.css('opacity', 1);
+    },
+    function () {
+        console.log("out");
+        var $temp = $(this).find($('.overlay'));
+        $temp.css('opacity', 0);
+    })
+
+</script>*@
 

@@ -1,7 +1,7 @@
 ﻿@model WatchStore.DataAccess.Session.Cart
 
-<div class="navbar-text navbar-right">
-    <b>@Html.ActionLink("Your Cart: ", "Index", new {ReturnUrl = Request.Url.PathAndQuery})</b>
+<div class="navbar-text navbar-right" onload ="document.refresh();">
+    <b>@Html.ActionLink("Your Cart: ", "Index", new {returnUrl = Request.Url.PathAndQuery})</b>
     @*@Model.Count() item(s),
     @Model.Sum(w =>w.Warranty)*@
     @Model.CartLines().Sum(x => x.Quantity) item(s),

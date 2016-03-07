@@ -16,6 +16,8 @@ namespace WatchStore.BusinessLogic.Interfaces
         void RemoveOrder(int? id);
         void MakeDependency(Order order, Watch watch, int quantity);
         void RemoveDependency(Order order, Watch watch, int quantity);
-
+        decimal CalculateTotalSum(int? id);
+        void IncreaseQuantityByOne(int orderId, int watchId);
+        void DecreaseQuantityByOne(int orderId, int watchId);
     }
 }

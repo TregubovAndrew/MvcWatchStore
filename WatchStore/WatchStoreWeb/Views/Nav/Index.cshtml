@@ -1,0 +1,69 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <title>Index</title>
+
+
+    <style>
+        .test {
+            color: #000;
+            padding: .5em;
+            border: 1px solid #444;
+        }
+
+        .active {
+            color: #900;
+        }
+
+        .inside {
+            background-color: aqua;
+        }
+    </style>
+
+</head>
+<body>
+<div>
+
+    <script type="text/javascript">
+        function OnSuccess(data) {
+            var results = $('#results'); // получаем нужный элемент
+            results.empty(); //очищаем элемент
+            for (var i = 0; i < data.length; i++) {
+                results.append('<li>' + data[i].Name + data[i].Price + '</li>'); // добавляем данные в список
+            }
+        }
+    </script>
+    <div class="aaa">text</div>
+    <script>
+    $("div.aaa").on({
+        click: function () {
+            $(this).toggleClass("active");
+        }, mouseenter: function () {
+            $(this).addClass("inside");
+        }, mouseleave: function () {
+            $(this).removeClass("inside");
+        }
+    });
+    </script>
+
+    @using (Ajax.BeginForm("WatchSearch", new AjaxOptions {  OnSuccess = "OnSuccess" }))
+    {
+        <input type="text" name="name"/>
+        <input type="submit" value="Поиск"/>
+    }
+    <div id="results"></div>
+    
+</div>
+</body>
+</html>

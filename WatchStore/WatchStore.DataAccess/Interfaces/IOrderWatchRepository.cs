@@ -11,5 +11,7 @@ namespace WatchStore.DataAccess.Interfaces
     {
         void MakeDependency(Order order, Watch watch, int quantity);
         void RemoveDependency(Order order, Watch watch, int quantity);
+        void IncreaseQuantityByOne(int orderId, int watchId);
+        void DecreaseQuantityByOne(int orderId, int watchId);
     }
 }

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WatchStoreWeb.Models.WatchesInOrderModel>
+
+@{
+    ViewBag.Title = "WatchesInOrder";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>WatchesInOrder</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Quantity</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>SubTotal</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Quantity</td>
+            <td>@item.Watch.Name</td>
+            <td>@item.Watch.Price</td>
+            <td>@(item.Watch.Price*item.Quantity)</td>
+            <td>
+                @using (Html.BeginForm("IncreaseNumberOfWatchesInOrderByOne", "Admin"))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("orderId", item.OrderId)
+                    @Html.Hidden("watchId", item.Watch.Id)
+                    <input class="btn btn-sm btn-success" type="submit" value="+"/>
+                }
+
+            </td>
+            <td>
+                @using (Html.BeginForm("DecreaseNumberOfWatchesInOrderByOne", "Admin"))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("orderId", item.OrderId)
+                    @Html.Hidden("watchId", item.Watch.Id)
+                    <input class="btn btn-sm btn-danger" type="submit" value="-" />
+                }
+
+            </td>
+            <td>
+                @using (Html.BeginForm("RemoveWatchesFromOrder", "Admin"))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("orderId", item.OrderId)
+                    @Html.Hidden("watchId", item.Watch.Id)
+                    <input class="btn btn-sm btn-warning" type="submit" value="Remove"/>
+                }
+
+            </td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3" class="text-right">Total:</td>
+        <td >@Model.Sum(x => x.Watch.Price*x.Quantity).ToString("c")</td>
+
+    </tr>
+    </tfoot>
+</table>
+<div>
+    @Html.ActionLink("Back to List", "EditOrder", new { id = ViewBag.orderId })
+</div>

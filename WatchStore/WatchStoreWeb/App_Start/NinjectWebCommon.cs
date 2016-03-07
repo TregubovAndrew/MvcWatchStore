@@ -1,22 +1,21 @@
+using System;
+using System.Web;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Ninject;
+using Ninject.Web.Common;
+using WatchStore.BusinessLogic;
 using WatchStore.BusinessLogic.Interfaces;
 using WatchStore.BusinessLogic.Services;
 using WatchStore.DataAccess;
 using WatchStore.DataAccess.Interfaces;
 using WatchStore.DataAccess.Repositories;
+using WatchStoreWeb;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(WatchStoreWeb.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(WatchStoreWeb.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
 
-namespace WatchStoreWeb.App_Start
+namespace WatchStoreWeb
 {
-    using System;
-    using System.Web;
-
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-    using Ninject;
-    using Ninject.Web.Common;
-
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -77,6 +76,23 @@ namespace WatchStoreWeb.App_Start
             kernel.Bind<IOrderWatchRepository>().To<OrderWatchRepository>();
             kernel.Bind<IOrderRepository>().To<OrderRepository>();
             kernel.Bind<IOrderService>().To<OrderService>();
+            kernel.Bind<IUserRepository>().To<UserRepository>();
+            kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IBrandRepository>().To<BrandRepository>();
+            kernel.Bind<IBrandService>().To<BrandService>();
+
+            kernel.Bind<IRequestContext>().To<RequestContext>().InRequestScope().OnActivation(ctx =>
+            {
+                var httpContext = HttpContext.Current;
+
+                ctx.IPAddress = httpContext.Request.UserHostAddress;
+                ctx.Session = httpContext.Session.SessionID;
+
+                if (httpContext.User.Identity.IsAuthenticated)
+                {
+                    ctx.User = kernel.Get<IUserRepository>().GetUserByName(httpContext.User.Identity.Name);
+                }
+            });
 
         }        
     }

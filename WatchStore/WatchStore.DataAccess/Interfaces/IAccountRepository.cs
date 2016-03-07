@@ -9,11 +9,11 @@ namespace WatchStore.DataAccess.Interfaces
 {
     public interface IAccountRepository
     {
-        Account GetById(int? id);
-        IEnumerable<Account> GetAllAccounts();
-        Account GetByLogin(string login);
-        void CreateAccount(Account account);
-        void UpdateAccount(Account account);
+        Customer GetById(int? id);
+        IEnumerable<Customer> GetAllAccounts();
+        Customer GetByUserName(string name);
+        void CreateAccount(Customer account);
+        void UpdateAccount(Customer account);
         void DeleteAccount(int? id);
         void Dispose();
     }

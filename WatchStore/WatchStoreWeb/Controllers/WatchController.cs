@@ -5,10 +5,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using WatchStore.BusinessLogic;
 using WatchStore.BusinessLogic.Interfaces;
 using WatchStore.DataAccess.Entities;
 using WatchStore.DataAccess.Interfaces;
 using WatchStore.DataAccess.Repositories;
+using WatchStoreWeb.Helpers;
 using WatchStoreWeb.Models;
 
 namespace WatchStoreWeb.Controllers
@@ -19,28 +22,42 @@ namespace WatchStoreWeb.Controllers
         private readonly IWatchService _watchService;
         private readonly IImageService _imageService;
         private readonly IOrderService _orderService;
-        public WatchController(IWatchService watchService, IImageService imageService, IOrderService orderService)
+        private readonly IRequestContext _requestContext;
+
+        public WatchController(IWatchService watchService, IImageService imageService, IOrderService orderService, IRequestContext requestContext)
         {
             _watchService = watchService;
             _imageService = imageService;
             _orderService = orderService;
+            _requestContext = requestContext;
         }
 
         // GET: Watches
-        public ActionResult Index(string category,string searchTerm = null)
+        public ActionResult Index(string category, bool? isNew)
         {
-            var watches = _watchService.SearchByName(searchTerm).Select(WatchModel.ConvertToWatchModel).Where(c => category == null || c.Category == category);
+            var watches = _watchService.GetAllWatches().Select(item => Mapper.Map<Watch, WatchModel>(item)).Where(c => category == null || c.Category == category);
+            var test = _watchService.GetAllWatches();
+            if (isNew==true)
+            {
+                watches = watches.OrderByDescending(x => x.Id);
+            }
             //var watches = _watchService.GetAllWatches(w =>w.)
-
+            var user = _requestContext.User;
+            //var model = Mapper.Map<IEnumerable<Watch>, IEnumerable<WatchModel>>(watches);
             //var model = watches.Where(w => searchTerm==null || w.Name.StartsWith(searchTerm)).Select(WatchModel.ConvertToWatchModel);
             return View(watches);
         }
-        
-        public ActionResult WatchDetails(int id,string returnUrl)
+
+        public ActionResult DynamicSearch(string searchTerm)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            var watches = _watchService.GetAllWatches().Select(x => x.Name.ToLower()).Contains(searchTerm);
+            return Json(watches, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult WatchDetails(int id)
+        {
             var watch = _watchService.GetById(id);
-            WatchModel model = WatchModel.ConvertToWatchModel(watch);
+            WatchModel model = Mapper.Map<Watch, WatchModel>(watch); //WatchModel.ConvertToWatchModel(watch);
             return View(model);
         }
         // GET: Watches/Details/5
@@ -55,7 +72,7 @@ namespace WatchStoreWeb.Controllers
             {
                 return HttpNotFound();
             }
-            return View(WatchModel.ConvertToWatchModel(watch));
+            return View(Mapper.Map<Watch,WatchModel>(watch));
         }
 
         // GET: Watches/Create
@@ -73,7 +90,7 @@ namespace WatchStoreWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                Watch watch = WatchModel.ConvertToWatch(watchModel);
+                Watch watch = Mapper.Map<WatchModel,Watch>(watchModel);
                 _watchService.CreateWatch(watch);
                 var image = _imageService.ConvertFileToImageDataAndBind(file, watch);
                 _imageService.AddImage(image);
@@ -95,7 +112,7 @@ namespace WatchStoreWeb.Controllers
             {
                 return HttpNotFound();
             }
-            return View(WatchModel.ConvertToWatchModel(watch));
+            return View(Mapper.Map<Watch, WatchModel>(watch));
         }
 
         // POST: Watches/Edit/5
@@ -106,8 +123,8 @@ namespace WatchStoreWeb.Controllers
         public ActionResult Edit(WatchModel watchModel, HttpPostedFileBase file)
         {
             if (ModelState.IsValid && file!=null)
-            { 
-                Watch watch = WatchModel.ConvertToWatch(watchModel);
+            {
+                Watch watch = Mapper.Map<WatchModel, Watch>(watchModel);
 
                 _watchService.EditWatch(watch);
                 _imageService.AddImage(_imageService.ConvertFileToImageDataAndBind(file, watch));
@@ -132,7 +149,7 @@ namespace WatchStoreWeb.Controllers
             {
                 return HttpNotFound();
             }
-            return View(WatchModel.ConvertToWatchModel(watch));
+            return View(Mapper.Map<Watch, WatchModel>(watch));
         }
 
         // POST: Watches/Delete/5

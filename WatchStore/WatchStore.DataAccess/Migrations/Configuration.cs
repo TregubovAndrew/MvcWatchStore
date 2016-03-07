@@ -29,21 +29,6 @@ namespace WatchStore.DataAccess.Migrations
             //    );
             //
 
-            context.Accounts.AddOrUpdate(a => a.Login,
-               new Account()
-               {
-                   Login = "admin",
-                   Password = "admin",
-                   Email = "admin@gmail.com",
-                   FirstName = "John",
-                   LastName = "Smith",
-                   PostalCode = 11,
-                   Country = "USA",
-                   City = "New York",
-                   Address = "Holy wood",
-                   Phone = 0937847612
-               }
-               );
             //context.Accounts.AddOrUpdate(a => a.Login,
             //    new Account()
             //    {
@@ -51,11 +36,66 @@ namespace WatchStore.DataAccess.Migrations
             //        Password = "manager"
             //    }
             //    );
+
+            context.Customers.AddOrUpdate(a => a.UserName,
+              new Customer()
+              {
+                  UserName = "ss",
+                  Password = "ss",
+                  Email = "admin@gmail.com",
+                  FirstName = "John",
+                  LastName = "Smith",
+                  PostalCode = 11,
+                  Country = "USA",
+                  City = "New York",
+                  Address = "Holy wood",
+                  Phone = 0937847612,
+                  DateRegistered = DateTime.UtcNow
+              }
+              );
+            context.SaveChanges();
+
+
+            context.Brands.AddOrUpdate(b => b.Name,
+                new Brand
+                {
+                    Name = "Paulin",
+                    Description = "In response to the decline of British watchmaking in recent decades, sisters Elizabeth and Charlotte Paulin were moved to act. " +
+                                  "They founded the watch brand Paulin in 2012, a project the duo says is about 'bringing together designing and making," +
+                                  " and restarting an industry that’s been dead for generations.'"
+                },
+                new Brand
+                {
+                    Name = "Squarestreet",
+                    Description = "Launched in 2010 by Swedish designer Alexis Holm, lifestyle brand Squarestreet takes its name from the road it was founded on in Hong Kong’s creative district of Sheung Wan." +
+                                  "A similarly self-explanatory method is used to name the brand’s watches. Minuteman is a one-handed watch that takes a somewhat unorthodox approach to timekeeping."
+                },
+                 new Brand
+                 {
+                     Name = "Kitmen Keung",
+                     Description = "Chinese-Canadian designer Kitmen Keung established his Hong Kong-based studio in 2014. He is a graduate of Milan’s Domus Academy, and produces limited-edition pieces that prize finesse," +
+                                   " poise and balanced composition. Each of Keung's products is a mixture of machine manufacture and slow artisanal craft. "
+                 },
+                 new Brand
+                 {
+                     Name = "Larsson & Jennings",
+                     Description = "Founded in 2011 and established in Stockholm and London, the brand creates watches that combine classic British style and minimal Swedish design." +
+                                   " Larsson & Jennings' timepieces make reference to traditional British dress watches, and feature a simple watch face, sculpted hands and Roman numeral markers. "
+                 },
+                 new Brand
+                 {
+                     Name = "Eone",
+                     Description = "Eone is an inclusive design company based in Washington DC, originally established by entrepreneur Hyungsoo Kim to produce the Bradley," +
+                                   " a timepiece for blind people that can be read using touch alone. Kim was struck by the need for better watch designs for blind people when" +
+                                   " sitting next to a visually impaired student during a lecture at MIT. The student’s watch informed him of the time audibly but this solution was often impractical.  "
+                 });
+            context.SaveChanges();
+
             context.Watches.AddOrUpdate(w => w.Name,
                 new Watch()
                 {
                     Name = "C201 Chronograph",
-                    Brand = "Paulin",
+                    BrandOld = "Paulin",
                     Price = 162.50M,
                     Colour = "Black",
                     Description = "The C201 chronograph is an updated version of the C200, the first Chronograph timepiece from Glasgow based brand Paulin." +
@@ -70,12 +110,13 @@ namespace WatchStore.DataAccess.Migrations
                     Mechanism = "Japanese quartz Miyota movement",
                     WaterResistance = "5 ATM",
                     Warranty = 1,
-                    Category = "Men"
+                    Category = "Men",
+                    BrandId = context.Brands.Single(b => b.Name == "Paulin").Id
                 },
                  new Watch()
                  {
                      Name = "Aluminium",
-                     Brand = "Squarestreet",
+                     BrandOld = "Squarestreet",
                      Price = 149.17M,
                      Colour = "Gold",
                      Description = "The Aluminium by squarestreet has a slim 42mm brushed aluminium case that houses a Swiss Ronda movement." +
@@ -90,12 +131,14 @@ namespace WatchStore.DataAccess.Migrations
                      Mechanism = "Swiss Ronda Movement",
                      WaterResistance = "5 ATM",
                      Warranty = 2,
-                     Category = "Men"
+                     Category = "Men",
+                     BrandId = context.Brands.Single(b => b.Name == "Squarestreet").Id
+
                  },
                  new Watch()
                  {
                      Name = "Long Distance 1.0",
-                     Brand = "Kitmen Keung",
+                     BrandOld = "Kitmen Keung",
                      Price = 240.00M,
                      Colour = "Brown",
                      Description = "The Long Distance watch is the first watch from Hong Kong-based designer Kitmen Keung." +
@@ -111,13 +154,14 @@ namespace WatchStore.DataAccess.Migrations
                      Mechanism = "Japanese quartz 3 hand",
                      WaterResistance = "5 ATM",
                      Warranty = 2,
-                     Category = "Men"
+                     Category = "Men",
+                     BrandId = context.Brands.Single(b => b.Name == "Kitmen Keung").Id
                  }
                  ,
                  new Watch()
                  {
                      Name = "Läder",
-                     Brand = "Larsson & Jennings",
+                     BrandOld = "Larsson & Jennings",
                      Price = 179.17M,
                      Colour = "Black",
                      Description = "Larsson & Jennings is an Anglo-Swedish brand that designs and manufacturers contemporary watches that combine classic " +
@@ -131,13 +175,14 @@ namespace WatchStore.DataAccess.Migrations
                      Mechanism = "Ronda 762 Quartz",
                      WaterResistance = "5 ATM",
                      Warranty = 2,
-                     Category = "Women"
+                     Category = "Women",
+                     BrandId = context.Brands.Single(b => b.Name == "Larsson & Jennings").Id
                  }
                  ,
                  new Watch()
                  {
                      Name = "The Bradley Voyager",
-                     Brand = "Eone",
+                     BrandOld = "Eone",
                      Price = 205.00M,
                      Colour = "Silver",
                      Description = "Created by US design company Eone, The Bradley Compass is a revolutionary tactile timepiece designed for everyone to wear." +
@@ -153,7 +198,8 @@ namespace WatchStore.DataAccess.Migrations
                      Mechanism = "Quartz",
                      WaterResistance = "Good for splashes or brief immersion in water, but not sufficient for water sports, swimming or bathing",
                      Warranty = 1,
-                     Category = "Women"
+                     Category = "Women",
+                     BrandId = context.Brands.Single(b => b.Name == "Eone").Id
                  });
             context.SaveChanges();
         }

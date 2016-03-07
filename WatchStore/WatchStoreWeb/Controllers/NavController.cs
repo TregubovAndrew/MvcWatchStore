@@ -14,20 +14,36 @@ namespace WatchStoreWeb.Controllers
     {
         // GET: Nav
         private readonly IWatchService _watchService;
+        private readonly IAccountService _accountService;
 
-        public NavController(IWatchService watchService)
+        public NavController(IWatchService watchService, IAccountService accountService)
         {
             _watchService = watchService;
+            _accountService = accountService;
         }
 
 
         public PartialViewResult Menu(string category = null)
         {
             @ViewBag.SelectedCategory = category;
-            //IEnumerable<WatchModel> watchesCategory = _watchService.GetAllWatches().Select(WatchModel.ConvertToWatchModel).Distinct().OrderBy(c =>c).Where(c => category==null || c.CurrentCategory==category);
-            IEnumerable<string> categories =
-                _watchService.GetAllWatches().Select(c => c.Category).Distinct().OrderBy(c => c);
-            return PartialView(categories);
+            return PartialView();
+        }
+
+        public PartialViewResult AdminMenu()
+        {
+            return PartialView();
+        }
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public JsonResult WatchSearch()
+        {
+            var watches = _watchService.GetAllWatches().Select(x => new {x.Name,x.Price});
+            var accs = _accountService.GetAllAccount().Select(x => new {x.FirstName,x.LastName});
+            return Json(watches, JsonRequestBehavior.AllowGet);
         }
     }
 }

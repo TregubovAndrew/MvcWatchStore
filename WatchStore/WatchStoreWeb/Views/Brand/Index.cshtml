@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WatchStore.DataAccess.Entities.Brand>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var brand in Model)
+{
+    <div class="col-md-4 clearfix ">
+
+        <h4>@brand.Name</h4>
+        @brand.Description
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            @foreach (var watch in brand.Watches)
+            {
+                <div class=" col-sm-4 js-action-hover">
+                    <a href="@Url.Action("WatchDetails", "Watch", new
+                                 {
+                                     id = watch.Id
+                                 })" style="display: block; position: relative;">
+                        <img src="data:image/png;base64,@Convert.ToBase64String(watch.Images.First().ImageData)" style="width: 100%; height: 100%;" />
+                        <div class="overlay">
+                            <div class="overlayWatchInfo">
+                                <h4>
+                                    <strong>@watch.Name</strong>
+                                </h4>
+                                <h5>@watch.Brand.Name</h5>
+                                <h5>@watch.Price.ToString("c")</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+
+}
+

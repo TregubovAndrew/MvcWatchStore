@@ -13,19 +13,34 @@ namespace WatchStoreWeb
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+            //   routes.MapRoute(
+            //    name: "CategoryNew",
+            //    url: "{controller}/{action}/{category}/{isNew}",
+            //    defaults: new { controller = "Watch", action = "Index",category =  UrlParameter.Optional }
+            //);
+
+            //routes.MapRoute(
+            //      name: "Category",
+            //      url: "{controller}/{category}",
+            //      defaults: new { controller = "Watch", action = "Index" }
+            //);
+
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Watch", action = "Index", id = UrlParameter.Optional }
+                  name: "Default",
+                  url: "{controller}/{action}/{id}",
+                  defaults: new { controller = "Watch", action = "Index", id = UrlParameter.Optional }
             );
 
-          //  routes.MapRoute(null,"",
-          //     new { controller = "Watch", action = "Index", category = (string)null, id = UrlParameter.Optional }
-          // );
 
-          //  routes.MapRoute(null, "",
-          //    new { controller = "Nav", action = "Menu"}
-          //);
+
+            //  routes.MapRoute(null,"",
+            //     new { controller = "Watch", action = "Index", category = (string)null, id = UrlParameter.Optional }
+            // );
+
+            //  routes.MapRoute(null, "",
+            //    new { controller = "Nav", action = "Menu"}
+            //);
 
             //routes.MapRoute(null,
             //    "{category}",

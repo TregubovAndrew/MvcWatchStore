@@ -69,16 +69,42 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Account.cs" />
-    <Compile Include="Migrations\201512011621394_Initial.cs" />
-    <Compile Include="Migrations\201512011621394_Initial.Designer.cs">
-      <DependentUpon>201512011621394_Initial.cs</DependentUpon>
+    <Compile Include="Entities\Brand.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Interfaces\IBrandRepository.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Migrations\201601311214342_Initial.cs" />
+    <Compile Include="Migrations\201601311214342_Initial.Designer.cs">
+      <DependentUpon>201601311214342_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201512101607117_First.cs" />
-    <Compile Include="Migrations\201512101607117_First.Designer.cs">
-      <DependentUpon>201512101607117_First.cs</DependentUpon>
+    <Compile Include="Migrations\201601311306164_First.cs" />
+    <Compile Include="Migrations\201601311306164_First.Designer.cs">
+      <DependentUpon>201601311306164_First.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601311315197_Second.cs" />
+    <Compile Include="Migrations\201601311315197_Second.Designer.cs">
+      <DependentUpon>201601311315197_Second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601311331056_Third.cs" />
+    <Compile Include="Migrations\201601311331056_Third.Designer.cs">
+      <DependentUpon>201601311331056_Third.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601311333266_Fourth.cs" />
+    <Compile Include="Migrations\201601311333266_Fourth.Designer.cs">
+      <DependentUpon>201601311333266_Fourth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602081747484_Fifth.cs" />
+    <Compile Include="Migrations\201602081747484_Fifth.Designer.cs">
+      <DependentUpon>201602081747484_Fifth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602081841521_Sixth.cs" />
+    <Compile Include="Migrations\201602081841521_Sixth.Designer.cs">
+      <DependentUpon>201602081841521_Sixth.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repositories\BrandRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Session\Cart.cs" />
     <Compile Include="Session\CartLine.cs" />
     <Compile Include="Entities\Image.cs" />
@@ -105,11 +131,26 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512011621394_Initial.resx">
-      <DependentUpon>201512011621394_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601311214342_Initial.resx">
+      <DependentUpon>201601311214342_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512101607117_First.resx">
-      <DependentUpon>201512101607117_First.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601311306164_First.resx">
+      <DependentUpon>201601311306164_First.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601311315197_Second.resx">
+      <DependentUpon>201601311315197_Second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601311331056_Third.resx">
+      <DependentUpon>201601311331056_Third.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601311333266_Fourth.resx">
+      <DependentUpon>201601311333266_Fourth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602081747484_Fifth.resx">
+      <DependentUpon>201602081747484_Fifth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602081841521_Sixth.resx">
+      <DependentUpon>201602081841521_Sixth.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

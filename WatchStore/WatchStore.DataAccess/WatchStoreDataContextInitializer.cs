@@ -27,10 +27,10 @@ namespace WatchStore.DataAccess
             //    );
             //
 
-            context.Accounts.AddOrUpdate(a => a.Login,
-               new Account()
+            context.Customers.AddOrUpdate(a => a.UserName,
+               new Customer()
                {
-                   Login = "admin",
+                   UserName = "admin",
                    Password = "admin",
                    Email = "admin@gmail.com",
                    FirstName = "John",
@@ -42,6 +42,22 @@ namespace WatchStore.DataAccess
                    Phone = 0937847612
                }
                );
+
+            context.Brands.AddOrUpdate(b =>b.Name,
+                new Brand
+                {
+                    Name = "Paulin",
+                    Description = "In response to the decline of British watchmaking in recent decades, sisters Elizabeth and Charlotte Paulin were moved to act. " +
+                                  "They founded the watch brand Paulin in 2012, a project the duo says is about 'bringing together designing and making," +
+                                  " and restarting an industry that’s been dead for generations.'"     
+                },
+                new Brand
+                {
+                    Name = "Squarestreet",
+                    Description = "Launched in 2010 by Swedish designer Alexis Holm, lifestyle brand Squarestreet takes its name from the road it was founded on in Hong Kong’s creative district of Sheung Wan." +
+                                  "A similarly self-explanatory method is used to name the brand’s watches. Minuteman is a one-handed watch that takes a somewhat unorthodox approach to timekeeping."
+                });
+
             //context.Accounts.AddOrUpdate(a => a.Login,
             //    new Account()
             //    {
@@ -53,7 +69,7 @@ namespace WatchStore.DataAccess
                 new Watch()
                 {
                     Name = "C201 Chronograph",
-                    Brand = "Paulin",
+                    BrandOld = "Paulin",
                     Price = 162.50M,
                     Colour = "Black",
                     Description = "The C201 chronograph is an updated version of the C200, the first Chronograph timepiece from Glasgow based brand Paulin." +
@@ -68,12 +84,13 @@ namespace WatchStore.DataAccess
                     Mechanism = "Japanese quartz Miyota movement",
                     WaterResistance = "5 ATM",
                     Warranty = 1,
-                    Category = "Men"
+                    Category = "Men",
+                    Brand = context.Brands.Single(b =>b.Name=="Paulin")
                 },
                  new Watch()
                  {
                      Name = "Aluminium",
-                     Brand = "Squarestreet",
+                     BrandOld = "Squarestreet",
                      Price = 149.17M,
                      Colour = "Gold",
                      Description = "The Aluminium by squarestreet has a slim 42mm brushed aluminium case that houses a Swiss Ronda movement." +
@@ -88,12 +105,13 @@ namespace WatchStore.DataAccess
                      Mechanism = "Swiss Ronda Movement",
                      WaterResistance = "5 ATM",
                      Warranty = 2,
-                     Category = "Men"
+                     Category = "Men",
+                     Brand = context.Brands.Single(b => b.Name == "Squarestreet")
                  },
                  new Watch()
                  {
                      Name = "Long Distance 1.0",
-                     Brand = "Kitmen Keung",
+                     BrandOld = "Kitmen Keung",
                      Price = 240.00M,
                      Colour = "Brown",
                      Description = "The Long Distance watch is the first watch from Hong Kong-based designer Kitmen Keung." +
@@ -115,7 +133,7 @@ namespace WatchStore.DataAccess
                  new Watch()
                  {
                      Name = "Läder",
-                     Brand = "Larsson & Jennings",
+                     BrandOld = "Larsson & Jennings",
                      Price = 179.17M,
                      Colour = "Black",
                      Description = "Larsson & Jennings is an Anglo-Swedish brand that designs and manufacturers contemporary watches that combine classic " +
@@ -135,7 +153,7 @@ namespace WatchStore.DataAccess
                  new Watch()
                  {
                      Name = "The Bradley Voyager",
-                     Brand = "Eone",
+                     BrandOld = "Eone",
                      Price = 205.00M,
                      Colour = "Silver",
                      Description = "Created by US design company Eone, The Bradley Compass is a revolutionary tactile timepiece designed for everyone to wear." +

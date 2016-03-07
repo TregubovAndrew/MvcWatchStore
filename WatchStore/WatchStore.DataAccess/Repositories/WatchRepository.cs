@@ -43,6 +43,7 @@ namespace WatchStore.DataAccess.Repositories
         public void EditWatch(Watch watch)
         {
             _db.Entry(watch).State = EntityState.Modified;
+            //_db.Entry(watch.Brand).State = EntityState.Modified;
             //foreach (var image in watch.Images)
             //{
             //    _db.Entry(image).State = EntityState.Modified;

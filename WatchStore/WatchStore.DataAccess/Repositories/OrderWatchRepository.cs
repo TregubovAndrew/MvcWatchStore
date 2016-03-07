@@ -34,6 +34,26 @@ namespace WatchStore.DataAccess.Repositories
         {
             var orderwatch = _db.OrderWatches.FirstOrDefault(ow => ow.Order.Id == order.Id && ow.Watch.Id == watch.Id);
             _db.OrderWatches.Remove(orderwatch);
+            _db.SaveChanges();
+        }
+
+        public void IncreaseQuantityByOne(int orderId, int watchId)
+        {
+            var orderwatch = _db.OrderWatches.FirstOrDefault(ow => ow.Order.Id == orderId && ow.Watch.Id == watchId);
+            if (orderwatch == null)
+                throw new ArgumentNullException();
+            orderwatch.Quantity += 1;
+            _db.SaveChanges();
+        }
+
+        public void DecreaseQuantityByOne(int orderId, int watchId)
+        {
+            var orderwatch = _db.OrderWatches.FirstOrDefault(ow => ow.Order.Id == orderId && ow.Watch.Id == watchId);
+            if (orderwatch == null)
+                throw new ArgumentNullException();
+            if (orderwatch.Quantity > 1)
+                orderwatch.Quantity -= 1;
+            _db.SaveChanges();
         }
     }
 }

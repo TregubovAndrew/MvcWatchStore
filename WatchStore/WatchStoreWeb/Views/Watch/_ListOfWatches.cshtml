@@ -1,53 +1,78 @@
 ﻿@model WatchStoreWeb.Models.WatchModel
 
+<script type="text/javascript">
+    $('.js-action-hover').hover(function () {
+        //$(this).css('background-color', 'gray');
+        console.log("in");
+        //$(this).find($('.message')).fadeIn(1000);
+        //var $image = $(this).find($('img'));
+        //$image.css("opacity", .6);
+        //$(this).text('hello');
+        var $temp = $(this).find($('.overlay'));
+        $temp.css('opacity', 1);
+        },
+    function() {
+        //$(this).css('background-color', 'white');
+        console.log("out");
+        //$(this).find($('.message')).fadeOut(1000);
+        //var $image = $(this).find($('img'));
+        //$image.css("opacity", 1);
+        var $temp = $(this).find($('.overlay'));
+        $temp.css('opacity', 0);
+    })
 
+</script>
 
-<div class=" col-sm-4">
-    @{
-        var path = @Model.Name + " – " + @Model.Colour + ".jpg";
-    }
-    @*<img src="~/Content/images/@path" width="200" height="200" />*@
+<div class=" col-sm-4 js-action-hover">
+
     @foreach (var img in Model.Images)
     {
-        <a href="@Url.Action("WatchDetails","Watch", new
+        <a href="@Url.Action("WatchDetails", "Watch", new
                  {
-                     id = Model.Id,
-                     returnUrl = Request.Url.PathAndQuery
-                 })">
-            <img src="data:image/png;base64,@Convert.ToBase64String(img.ImageData)" width="200" height="200" />
+                     id = Model.Id
+                 })" style="display: block; position: relative;">
+            <img src="data:image/png;base64,@Convert.ToBase64String(img.ImageData)" style="width: 100%; height: 100%;"/>
+            <div class="overlay" style="opacity: 0; position: absolute;top: 0;right: 0;bottom: 0;left: 0;background: rgba(89,144,169,0.7);">
+                <div class="watchInfo" style="position: absolute; text-align: center; top: 25%; right: 25%; bottom: 25%; left: 25%; color: white;" >
+                    <h4>
+                        <strong>Name : @Model.Name</strong>
+                    </h4>
+                    <h5>Brand : @Model.Brand.Name</h5>
+                    <h5>Colour : @Model.Colour</h5>
+                </div>
+            </div>
+            <div class="message" style="display: none;">
+                <h4>
+                    <strong>Name : @Model.Name</strong>
+                </h4>
+                <h5>Brand : @Model.Brand.Name</h5>
+                <h5>Colour : @Model.Colour</h5>
+            </div>
         </a>
     }
 
-    <div>
-        <h4>
+    @*<div>*@
+    @*<h4>
             <strong>Name : @Model.Name</strong>
         </h4>
-        <h5>Brand : @Model.Brand</h5>
-        <h5>Colour : @Model.Colour</h5>
-        @*@Html.ActionLink("Watch Details", "WatchDetails", new
-            {
-                id = Model.Id,
-                returnUrl = Request.Url.PathAndQuery
-
-            })*@
-        @if (Request.IsAuthenticated)
+        <h5>Brand : @Model.Brand.Name</h5>
+        <h5>Colour : @Model.Colour</h5>*@
+    @*@Html.ActionLink("Watch Details", "WatchDetails", new
         {
-            <div>
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = Model.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
-            </div>
-        }
-        @using (Html.BeginForm("AddToCart", "Cart"))
+            id = Model.Id,
+            returnUrl = Request.Url.PathAndQuery
+
+        })*@
+
+    @*@using (Html.BeginForm("AddToCart", "Cart"))
         {
             <div>
                 @Html.HiddenFor(x => x.Id)
-                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-                <input type="submit" class="btn btn-success" value="Add to cart" />
+                <input type="submit" class="btn btn-success" value="Add to cart"/>
             </div>
         }
-        <br />
-        @*@Html.ActionLink("AddToOrder","Order",null,@item);*@
-    </div>
+        <br/>*@
+    @*@Html.ActionLink("AddToOrder","Order",null,@item);*@
+    @*<div>*@
 </div>
 

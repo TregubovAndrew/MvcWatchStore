@@ -1,38 +1,58 @@
 ﻿@model IEnumerable<string>
-           
-@Html.ActionLink("Home","Index","Watch",null,
-new {@class = "btn btn-block btn-default btn-lg"})
-
-@foreach (var link in Model)
-{
-    @Html.RouteLink(link,new
-    {
-        controller = "Watch",
-        action = "Index",
-        category = link,
-        
-    },
-        new
-        {
-            @class = "btn btn-block btn-default btn-lg "
-            + (link==ViewBag.SelectedCategory ? "btn-primary" : "")        
-        })
-}
-@*<form method="GET" action="@Url.Action("Index","Watch")">
-    <input type="submit" class="btn btn-block btn-default btn-lg" value="All" />
-    @foreach (var item in Model)
-    {
-        if (@ViewBag.SelectedCategory == item)
-        {
-            <input type="submit" class="btn btn-block btn-default btn-lg btn-primary" name="category" value="@item" />
-        }
-        else
-        {
-            <input type="submit" class="btn btn-block btn-default btn-lg" name="category" value="@item" />
-        }
-
-    }
 
 
-</form>*@
+<ul class="nav nav-tabs nav-justified">
+
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">New <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="@Url.Action("Index", "Watch", new {isNew = true})">All</a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Index", "Watch", new {category = "Men", isNew = true})">Men</a>
+            </li>
+
+            <li>
+                @*@Html.ActionLink("Women", "Index", "Watch", null, new { category = "Women", isNew = true })*@
+                <a href="@Url.Action("Index", "Watch", new {category = "Women", isNew = true})">Women</a>
+            </li>
+
+        </ul>
+    </li>
+
+    <li>
+        @Html.ActionLink("All", "Index", "Watch")
+    </li>
+
+    <li>
+        @Html.ActionLink("Men", "Index", "Watch", new {category = "Men"}, null)
+    </li>
+
+    <li>
+        @Html.ActionLink("Women", "Index", "Watch", new { category = "Women" }, null)
+    </li>
+
+
+    @*<li><a href="@Url.Action("Index", "Brand")">Brand</a></li>*@
+    <li>@Html.ActionLink("Brand", "Index", "Brand")</li>
+</ul>
+    @*<form method="GET" action="@Url.Action("Index","Watch")">
+            <input type="submit" class="btn btn-block btn-default btn-lg" value="All" />
+            @foreach (var item in Model)
+            {
+                if (@ViewBag.SelectedCategory == item)
+                {
+                    <input type="submit" class="btn btn-block btn-default btn-lg btn-primary" name="category" value="@item" />
+                }
+                else
+                {
+                    <input type="submit" class="btn btn-block btn-default btn-lg" name="category" value="@item" />
+                }
+
+            }
+
+
+        </form>*@
 

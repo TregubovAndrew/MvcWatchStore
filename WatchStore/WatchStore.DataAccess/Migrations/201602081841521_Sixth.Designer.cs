@@ -7,13 +7,13 @@ namespace WatchStore.DataAccess.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class First : IMigrationMetadata
+    public sealed partial class Sixth : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(First));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Sixth));
         
         string IMigrationMetadata.Id
         {
-            get { return "201512101607117_First"; }
+            get { return "201602081841521_Sixth"; }
         }
         
         string IMigrationMetadata.Source

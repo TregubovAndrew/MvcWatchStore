@@ -9,7 +9,7 @@ namespace WatchStore.DataAccess.Entities
     public class Order
     {
         public int Id { get; set; }
-        public int Sum { get; set;}
+        public decimal Sum { get; set;}
         public DateTime Date { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }

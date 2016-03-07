@@ -14,32 +14,34 @@ namespace WatchStore.BusinessLogic.Services
     public class AccountService :IAccountService
     {
         private readonly IAccountRepository _accountRepository;
+    
         public AccountService(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }
 
-        public Account GetById(int? id)
+        public Customer GetById(int? id)
         {
             return _accountRepository.GetById(id);
         }
 
-        public IEnumerable<Account> GetAllAccount()
+        public IEnumerable<Customer> GetAllAccount()
         {
             return _accountRepository.GetAllAccounts();
         }
 
-        public Account GetByLogin(string login)
+        public Customer GetByUserName(string name)
         {
-            return _accountRepository.GetByLogin(login);
+            return _accountRepository.GetByUserName(name);
         }
 
-        public void CreateAccount(Account account)
+        public void CreateAccount(Customer account)
         {
+            account.DateRegistered = DateTime.Now;
             _accountRepository.CreateAccount(account);
         }
 
-        public void UpdateAccount(Account account)
+        public void UpdateAccount(Customer account)
         {
             _accountRepository.UpdateAccount(account);
         }
@@ -51,7 +53,7 @@ namespace WatchStore.BusinessLogic.Services
 
         public bool IsUniqueLogin(string login)
         {
-            var user = GetByLogin(login);
+            var user = GetByUserName(login);
             if (user==null)
             {
                 return true;
@@ -60,10 +62,14 @@ namespace WatchStore.BusinessLogic.Services
         }
         public bool IsExistAccount(string login, string password)
         {
-            var user = GetByLogin(login);
-            if (user.Login == login && user.Password == password)
+            var user = GetByUserName(login);
+            if (user == null)
+                return false;
+            if (user.UserName == login && user.Password == password)
                 return true;
             return false;
         }
+
+       
     }
 }

@@ -58,5 +58,22 @@ namespace WatchStore.BusinessLogic.Services
         {
             _orderWatchRepository.RemoveDependency(order, watch, quantity);
         }
+
+        public decimal CalculateTotalSum(int? id)
+        {
+            var order = _orderRepository.GetById(id);
+            decimal sum = order.OrderWatches.Sum(x => x.Watch.Price*x.Quantity);
+            return sum;
+        }
+
+        public void IncreaseQuantityByOne(int orderId, int watchId)
+        {
+           _orderWatchRepository.IncreaseQuantityByOne(orderId,watchId);
+        }
+
+        public void DecreaseQuantityByOne(int orderId, int watchId)
+        {
+            _orderWatchRepository.DecreaseQuantityByOne(orderId, watchId);
+        }
     }
 }

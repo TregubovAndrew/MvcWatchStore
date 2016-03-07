@@ -11,35 +11,34 @@ namespace WatchStore.DataAccess.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
-        //private readonly WatchStoreDataContext _db = new WatchStoreDataContext();
         private readonly WatchStoreDataContext _db;
         public AccountRepository(WatchStoreDataContext db)
         {
             _db = db;
         }
 
-        public Account GetById(int? id)
+        public Customer GetById(int? id)
         {
-            return _db.Accounts.Find(id);
+            return _db.Customers.Find(id);
         }
 
-        public IEnumerable<Account> GetAllAccounts()
+        public IEnumerable<Customer> GetAllAccounts()
         {
-            return _db.Accounts;
+            return _db.Customers;
         }
 
-        public Account GetByLogin(string login)
+        public Customer GetByUserName(string name)
         {
-            return _db.Accounts.FirstOrDefault(a => a.Login == login);
+            return _db.Customers.FirstOrDefault(a => a.UserName == name);
         }
 
-        public void CreateAccount(Account account)
+        public void CreateAccount(Customer account)
         {
-            _db.Accounts.Add(account);
+            _db.Customers.Add(account);
             _db.SaveChanges();
         }
 
-        public void UpdateAccount(Account account)
+        public void UpdateAccount(Customer account)
         {
             _db.Entry(account).State = EntityState.Modified;
             _db.SaveChanges();
@@ -47,8 +46,8 @@ namespace WatchStore.DataAccess.Repositories
 
         public void DeleteAccount(int? id)
         {
-            Account account = _db.Accounts.Find(id);
-            _db.Accounts.Remove(account);
+            Customer account = _db.Customers.Find(id);
+            _db.Customers.Remove(account);
             _db.SaveChanges();
         }
 
